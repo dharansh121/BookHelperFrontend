@@ -1,0 +1,157 @@
+.optionCard-container body {
+  -webkit-font-smoothing: antialiased;
+}
+
+.optionCard-container p {
+  line-height: 1.4em;
+}
+
+
+.optionCard-container {
+  /* padding: 40px 80px; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.optionCard-card-wrap {
+  margin: 30px;
+  transform: perspective(800px);
+  transform-style: preserve-3d;
+  /* cursor: pointer; */
+  /* background-color: #fff;  */
+}
+ /* .optionCard-card-wrap:hover .optionCard-card-info {
+  transform: translateY(0);
+} */
+
+/* .optionCard-card-wrap:hover .optionCard-card-info p {
+  opacity: 1;
+} */
+/* .optionCard-card-wrap:hover .optionCard-card-info{
+  transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+} */
+
+
+
+.optionCard-card-wrap:hover .optionCard-card-info:after {
+  transition: 5s cubic-bezier(0.23, 1, 0.32, 1);
+  opacity: 1;
+  /* transform: translateY(0); */
+}
+
+
+.optionCard-card-wrap:hover .optionCard-card-bg {
+  transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 5s cubic-bezier(0.23, 1, 0.32, 1);
+  opacity: 0.6;
+}
+.optionCard-card-wrap:hover .optionCard-card {
+  transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 2s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: rgba(255, 255, 255, 0.2) 0 0 40px 5px, rgba(255, 255, 255, 1) 0 0 0 1px, rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset white 0 0 0 6px;
+}
+
+
+.optionCard-card {
+  position: relative;
+  flex: 0 0 240px;
+  width: 320px;
+  height: 490px;
+  background-color: #333;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.66) 0 30px 60px 0, inset #333 0 0 0 5px, inset rgba(255, 255, 255, 0.5) 0 0 0 6px;
+  transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+
+.optionCard-card-bg {
+  opacity: 0.4;
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95), opacity 5s 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  pointer-events: none;
+}
+.optionCard-card-info {
+  padding: 20px;
+  position: absolute;
+  color: #fff;
+  height: 100%;
+  /* transform: translateY(40%);
+  transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1); */
+}
+.optionCard-card-info p {
+  opacity: 1;
+  letter-spacing: 0.5px;
+  
+  font-size: 19px;
+  font-weight: 500;
+  margin-top: 30px;
+  text-shadow: rgba(0, 0, 0, 1) 0 2px 3px;
+  /* transition: 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1); */
+}
+.optionCard-card-info * {
+  position: relative;
+  z-index: 1;
+}
+.optionCard-card-info:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
+  background-blend-mode: overlay;
+  opacity: 0;
+  /* transform: translateY(100%); */
+  transition: 5s 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+.optionCard-card-info .optionCard-cutout {
+  background-color: white;
+  color: black;
+  font-size: 36px;
+  font-weight: 700;
+  margin-top: 15px;
+  margin-inline: auto;
+  text-shadow: rgba(0, 0, 0, 0.4) 0 7px 10px;
+  /* padding: 5px; */
+  width: 90%;
+  font-family: "Playfair Display";
+  border-radius: 8px;
+  text-align: center; 
+  /* position: absolute;  */
+  /* top: 50%;  */
+  /* left: 50%;  */
+  /* transform: translate(-50%, -50%);  */
+  mix-blend-mode: screen; /* This makes the cutout text possible */
+}
+
+.optionCard-card-info .optionCard-cardButton{
+ margin-top: 10px;
+  color: white;
+  font-weight: 600;
+  /* width: 100%; */
+  border-color: white;
+}
+
+@media (max-width: 330px) {
+  .optionCard-card {
+    width: 265px;
+    height: 520px;
+  }
+  *{
+    margin-inline: 0px;
+    padding-inline: 0px;
+  }
+  .optionCard-card-info .optionCard-cutout{
+    width: 100%;
+  }
+}
