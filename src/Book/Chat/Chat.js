@@ -9,6 +9,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import RecentUsers from '../RecentUsers/RecentUsers'
 import CustomizedSnackbars from "../../CustomizedSnackbars";
+import history from "../../history";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Chat = (props) => {
   console.log(props)
-  const [id, setId] = useState(props.location.state.owner);
+  const [id, setId] = useState(props.match.params.id);
   console.log("cehcging whether the id is appsing by params or not",id)
-  const [name,setName] = useState(props.location.state.ownerName)
+  const [name,setName] = useState(null)
   const [messages, SetMessages] = useState([]);
   const scrollRef = useRef();
   const socket = useRef();
@@ -110,6 +111,32 @@ const Chat = (props) => {
     }
     console.log(messages);
     fetchMessage();
+    const fetchUserDetails = async () => {
+      console.log("lol")
+      try {
+        const token = localStorage.getItem("user");
+        const response = await axios.get("/users/userInfo", {
+          headers: {
+            "auth-token": token,
+          },
+          params : {
+            _id : id
+          },
+        });
+        console.log(response.data);
+        setName(response.data.name)
+      } catch (e) {
+        console.log(e);
+        console.log(e.response.data);
+        if (
+          e.response.data === "Invalid Token" ||
+          e.response.data === "Access denied"
+        ) {
+          history.push("/login");
+        }
+      }
+    }
+    fetchUserDetails()
     console.log(messages);
   }, [id]);
 

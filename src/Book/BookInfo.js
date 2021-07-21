@@ -99,13 +99,17 @@ const BookInfo = (props) => {
             alt="Book"
           />
           <br />
-          <Button
+          {book.owner === currentUserId ? (
+            null
+          ) : (
+            <Button
             variant="contained"
             color="primary"
             onClick={() => addRequestButton()}
           >
             Add Request
           </Button>
+          )}
           {book.owner === currentUserId ? (
             <Button
             variant="contained"

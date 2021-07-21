@@ -245,13 +245,14 @@ const UserProfile = (props) => {
               variant="contained"
               color="primary"
               component={Link}
-              to={{
-                pathname: "/chat",
-                state: {
-                  owner: userId,
-                  ownerName : user.name
-                },
-              }}
+              // to={{
+              //   pathname: "/chat",
+              //   state: {
+              //     owner: userId,
+              //     ownerName : user.name
+              //   },
+              // }}
+              to={`/chat/${userId}`}
             >
               Chat with Seller
             </Button>
