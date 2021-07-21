@@ -49,12 +49,13 @@ const UserProfile = (props) => {
   const [searchInput, setSearchInput] = useState("");
   const [firstTime, setFirstTime] = useState(true);
   const [sortType, setSortType] = useState(1);
+  const [user,setUser] = useState(null)
   console.log(props)
-  const userId = props.location.state.owner;
-  const userName = props.location.state.ownerName;
+  const userId = props.match.params.id;
+  // const userName = props.location.state.ownerName;
   // console.log(props.location.state.owner);
   // console.log(props.location.state.ownerName);
-  console.log(props.location.state.owner)
+  // console.log(props.location.state.owner)
   useEffect(() => {
     
     // props.getCollection(setFilteredCollection, setAllBook);
@@ -85,8 +86,34 @@ const UserProfile = (props) => {
       }
     }
 
-    fetchUserBooks()
+    const fetchUserDetails = async () => {
+      console.log("lol")
+      try {
+        const token = localStorage.getItem("user");
+        const response = await axios.get("/users/userInfo", {
+          headers: {
+            "auth-token": token,
+          },
+          params : {
+            _id : userId
+          },
+        });
+        console.log(response.data);
+        setUser(response.data)
+      } catch (e) {
+        console.log(e);
+        console.log(e.response.data);
+        if (
+          e.response.data === "Invalid Token" ||
+          e.response.data === "Access denied"
+        ) {
+          history.push("/login");
+        }
+      }
+    }
 
+    fetchUserBooks()
+    fetchUserDetails()
   }, []);
 
   useEffect(() => {});
@@ -184,7 +211,8 @@ const UserProfile = (props) => {
   return (
     <div>
       <BookNavbar />
-      <div className={classes.main}>
+      {user ? (
+        <div className={classes.main}>
         <div>
           <div>
             <label>Search:</label>
@@ -211,7 +239,7 @@ const UserProfile = (props) => {
               </Select>
             </FormControl>
             <Typography variant="subtitle1">
-              ownerName - {userName}
+              ownerName - {user.name}
             </Typography>
             <Button
               variant="contained"
@@ -221,7 +249,7 @@ const UserProfile = (props) => {
                 pathname: "/chat",
                 state: {
                   owner: userId,
-                  ownerName : userName
+                  ownerName : user.name
                 },
               }}
             >
@@ -250,6 +278,9 @@ const UserProfile = (props) => {
           </Grid>
         </div>
       </div>
+      ) : (
+        <CircularProgress />
+      )}
     </div>
   );
 };

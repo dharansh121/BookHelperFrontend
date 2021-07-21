@@ -36,12 +36,15 @@ const RecentUsers = (props) => {
                   color="primary"
                   component={Link}
                   // to={`/chat/:${user._id}`}
-                  to={{
-                    pathname: "/userProfile",
-                    state: {
-                      owner: user._id,
-                      ownerName : user.name
-                    }
+                  // to={{
+                  //   pathname: "/userProfile",
+                  //   state: {
+                  //     owner: user._id,
+                  //     ownerName : user.name
+                  //   }
+                  // }}
+                  to = {{
+                    pathname : `/userProfile/${user._id}`
                   }}
                 >
                   Contact {user.name}

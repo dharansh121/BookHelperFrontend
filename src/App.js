@@ -46,7 +46,7 @@ const App = (props) => {
           <Route path="/myCollection" exact component={MyCollection} />
           <Route path="/home" exact component={Home} />
           <Route path="/wishlist" exact component={Wishlist} />
-          <Route path="/userProfile" exact component={UserProfile} />
+          <Route path="/userProfile/:id" exact component={UserProfile} />
           <Route path="/recentUsers" exact component={RecentUsers} />
           {/* <Route path="/collection" exact component={Collection} />
           <Route path="/home" exact component={Home} />

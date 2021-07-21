@@ -301,7 +301,7 @@ const BookCard = (props) => {
                 //     book: props.book,
                 //   },
                 // }}
-                to = {`bookInfo/${book._id}`}
+                to = {`/bookInfo/${book._id}`}
                 variant="outlined"
                 // className="optionCard-cardButton"
                 startIcon={<InfoIcon style={{ fontSize: "15px" }} />}

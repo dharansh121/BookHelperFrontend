@@ -5,7 +5,7 @@ import BookNavbar from "./BookNavbar";
 import Button from "@material-ui/core/Button";
 import axios from "../axios";
 import history from "../history";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import UserProfile from "./ContactUser/UserProfile";
 import { connect } from "react-redux";
 import {
@@ -123,12 +123,15 @@ const BookInfo = (props) => {
               variant="contained"
               color="primary"
               component={Link}
-              to={{
-                pathname: "/userProfile",
-                state: {
-                  owner: book.owner,
-                  ownerName : book.ownerName
-                }
+              // to={{
+              //   pathname: "/userProfile",
+              //   state: {
+              //     owner: book.owner,
+              //     ownerName : book.ownerName
+              //   }
+              // }}
+              to = {{
+                pathname : `/userProfile/${book.owner}`
               }}
             >
               Contact Seller
