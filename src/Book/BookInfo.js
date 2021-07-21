@@ -13,18 +13,34 @@ import {
   removeFromWishList,
 } from "../actions/getWishListAction";
 import { deleteInCollcetion } from "../actions/getMyCollectionAction";
+import { CircularProgress } from "@material-ui/core";
 
 
 const BookInfo = (props) => {
   console.log(props)
-  console.log(props.location.state.book);
+  // console.log(props.location.state.book);
   const currentUserId = localStorage.getItem("user_id");
   console.log(currentUserId);
-  const [book, setBook] = useState(props.location.state.book);
-  console.log(props.location.state.book)
+  // const [book, setBook] = useState(props.location.state.book);
+  const [book, setBook] = useState(null);
+  // console.log(props.location.state.book)
   useEffect(() => {
-    console.log(book);
+    console.log(props.match.params.id);
     // console.log(props.location.state.book)
+    const fetchBook = async () => {
+      const token = localStorage.getItem("user");
+      const currentUserId = localStorage.getItem("user_id");
+      const response = await axios.get("/books/bookInfo", {
+        params: {
+          _id: props.match.params.id,
+        },
+        headers: {
+          "auth-token": token,
+        },
+      });
+      setBook(response.data)
+    }
+    fetchBook()
   }, []);
 
   useEffect(() => {
@@ -61,47 +77,64 @@ const BookInfo = (props) => {
   const renderInfo = () => {
     // console.log(book)
     return (
-      <div>
-        <Typography variant="subtitle1">OwnerId - {book.owner}</Typography>
-        <Typography variant="subtitle1">
-          ownerName - {book.ownerName}
-        </Typography>
-        <Typography variant="subtitle1">category - {book.category}</Typography>
-        <Typography variant="subtitle1">title - {book.title}</Typography>
-        <Typography variant="subtitle1">
-          sellingPrice - {book.sellingPrice}
-        </Typography>
-        <Typography variant="subtitle1">
-          description - {book.description}
-        </Typography>
-        <img
-          src={book.imageUrl ? book.imageUrl : "./images/book.jpg"}
-          width="200"
-          height="250"
-          alt="Book"
-        />
-        <br />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => addRequestButton()}
-        >
-          Add Request
-        </Button>
-        {book.owner === currentUserId ? (
+      <div >
+        {book ? (
+          <div>
+          <Typography variant="subtitle1">OwnerId - {book.owner}</Typography>
+          <Typography variant="subtitle1">
+            ownerName - {book.ownerName}
+          </Typography>
+          <Typography variant="subtitle1">category - {book.category}</Typography>
+          <Typography variant="subtitle1">title - {book.title}</Typography>
+          <Typography variant="subtitle1">
+            sellingPrice - {book.sellingPrice}
+          </Typography>
+          <Typography variant="subtitle1">
+            description - {book.description}
+          </Typography>
+          <img
+            src={book.imageUrl ? book.imageUrl : "./images/book.jpg"}
+            width="200"
+            height="250"
+            alt="Book"
+          />
+          <br />
           <Button
-          variant="contained"
-          color="primary"
-          component={Link}
-          to={{
-            pathname: "/myCollection",
-            state: { },
-          }}
-        >
-          Contact Seller
-        </Button>
-        ) : (
-          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => addRequestButton()}
+          >
+            Add Request
+          </Button>
+          {book.owner === currentUserId ? (
+            <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            to={{
+              pathname: "/myCollection",
+              state: { },
+            }}
+          >
+            Contact Seller
+          </Button>
+          ) : (
+            <Button
+              variant="contained"
+              color="primary"
+              component={Link}
+              to={{
+                pathname: "/userProfile",
+                state: {
+                  owner: book.owner,
+                  ownerName : book.ownerName
+                }
+              }}
+            >
+              Contact Seller
+            </Button>
+          )}
+          {/* <Button
             variant="contained"
             color="primary"
             component={Link}
@@ -110,40 +143,29 @@ const BookInfo = (props) => {
               state: {
                 owner: book.owner,
                 ownerName : book.ownerName
-              }
+              },
             }}
           >
             Contact Seller
-          </Button>
-        )}
-        {/* <Button
-          variant="contained"
-          color="primary"
-          component={Link}
-          to={{
-            pathname: "/userProfile",
-            state: {
-              owner: book.owner,
-              ownerName : book.ownerName
-            },
-          }}
-        >
-          Contact Seller
-        </Button> */}
-
-        {book.owner === currentUserId ? (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => props.deleteInCollcetion(book)}
-          >
-            Delete Book
-          </Button>
+          </Button> */}
+  
+          {book.owner === currentUserId ? (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => props.deleteInCollcetion(book)}
+            >
+              Delete Book
+            </Button>
+          ) : (
+            <>
+            </>
+          )}
+  
+        </div>
         ) : (
-          <>
-          </>
+          <CircularProgress />
         )}
-
       </div>
     );
   };

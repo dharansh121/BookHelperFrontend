@@ -295,12 +295,13 @@ const BookCard = (props) => {
                   marginBlock: "8px",
                 }}
                 component={Link}
-                to={{
-                  pathname: "/bookInfo",
-                  state: {
-                    book: props.book,
-                  },
-                }}
+                // to={{
+                //   pathname: "/bookInfo",
+                //   state: {
+                //     book: props.book,
+                //   },
+                // }}
+                to = {`bookInfo/${book._id}`}
                 variant="outlined"
                 // className="optionCard-cardButton"
                 startIcon={<InfoIcon style={{ fontSize: "15px" }} />}
